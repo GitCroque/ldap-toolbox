@@ -1,0 +1,242 @@
+# LDAP Health Monitor Configuration
+# Copy this file to config.yaml and customize for your environment
+
+ldap:
+  # Connection settings
+  server: ldap://ldap.example.com
+  port: 389
+  use_ssl: true
+  use_tls: true
+
+  # Authentication
+  bind_dn: cn=admin,dc=example,dc=com
+  bind_password: ${LDAP_PASSWORD}  # Use environment variable
+
+  # Base DN for searches
+  base_dn: dc=example,dc=com
+
+  # Timeout and retry settings
+  timeout: 10
+  retry_max: 3
+  retry_delay: 2
+
+  # Structure (customize for your LDAP schema)
+  users_ou: ou=users,dc=example,dc=com
+  groups_ou: ou=groups,dc=example,dc=com
+
+  # Schema (customize for your LDAP implementation)
+  user_objectclass: inetOrgPerson
+  group_objectclass: groupOfNames
+  user_uid_attribute: uid
+  group_member_attribute: member
+
+  # Search settings
+  page_size: 1000
+  search_scope: SUBTREE
+
+# Audit configuration
+audit:
+  # Checks to perform
+  checks:
+    - health
+    - users
+    - groups
+    - structure
+    - security
+    - consistency
+
+  # Thresholds for warnings and alerts
+  thresholds:
+    inactive_days: 90
+    password_expiry_warning_days: 30
+    max_empty_groups: 5
+    max_group_size: 100
+    max_nested_depth: 3
+    response_time_warning_ms: 500
+    response_time_critical_ms: 2000
+    ssl_cert_expiry_warning_days: 30
+
+  # Required attributes for users (customize for your schema)
+  required_user_attributes:
+    - cn
+    - sn
+    - mail
+    - uid
+
+  # Required attributes for groups (customize for your schema)
+  required_group_attributes:
+    - cn
+    - member
+
+  # Security audit settings
+  security:
+    check_password_policies: true
+    alert_on_admin_creation: true
+    alert_on_mass_delete: true
+    mass_delete_threshold: 10
+    check_privileged_accounts: true
+    privileged_groups:
+      - cn=admins,ou=groups,dc=example,dc=com
+      - cn=domain admins,ou=groups,dc=example,dc=com
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  interval: 300  # seconds between checks
+  retention_days: 90
+
+  # Metrics to collect
+  metrics:
+    - users_count
+    - groups_count
+    - response_time
+    - auth_failures
+    - modifications
+    - connections
+
+  # Alert configuration
+  alerts:
+    enabled: true
+    channels:
+      - slack
+      - email
+
+    # Alert thresholds
+    response_time_threshold: 2000  # ms
+    auth_failure_threshold: 10
+    connection_error_threshold: 3
+
+# Alert channels configuration
+alerts:
+  # Slack integration
+  slack:
+    enabled: true
+    webhook_url: ${SLACK_WEBHOOK}
+    channel: "#ldap-alerts"
+    mention_on_critical: "@channel"
+    username: "LDAP Monitor"
+    icon_emoji: ":warning:"
+
+  # Email integration
+  email:
+    enabled: true
+    smtp_host: smtp.example.com
+    smtp_port: 587
+    smtp_use_tls: true
+    smtp_user: ${SMTP_USER}
+    smtp_password: ${SMTP_PASSWORD}
+    from: ldap-monitor@example.com
+    to:
+      - admin@example.com
+      - team@example.com
+    subject_prefix: "[LDAP Monitor]"
+
+  # Webhook integration (generic)
+  webhook:
+    enabled: false
+    url: ${N8N_WEBHOOK}
+    method: POST
+    headers:
+      Content-Type: application/json
+
+  # Alert levels to send
+  levels:
+    info: true
+    warning: true
+    critical: true
+
+# Management configuration
+management:
+  # Safety settings
+  allow_delete: false
+  allow_bulk_operations: true
+  require_confirmation: true
+  backup_before_modify: true
+  dry_run_by_default: true
+
+  # Batch operation limits
+  batch_size: 100
+  batch_delay: 1  # seconds between batches
+
+  # Backup settings for operations
+  operation_backup_enabled: true
+  operation_backup_dir: ./backups/operations
+
+# Backup configuration
+backup:
+  auto_backup: true
+  backup_dir: ./backups
+  retention_days: 30
+  compress: true
+  format: ldif  # ldif, json, yaml
+
+  # Incremental backup settings
+  incremental_enabled: true
+  incremental_base_dir: ./backups/incremental
+
+  # Backup schedule (cron format)
+  schedule:
+    enabled: false
+    cron: "0 2 * * *"  # Daily at 2 AM
+
+# Reports configuration
+reports:
+  output_dir: ./reports
+  default_format: html  # html, json, csv, pdf, yaml
+  include_graphs: true
+  include_recommendations: true
+
+  # Template settings
+  templates_dir: ./templates
+  custom_logo: null
+
+  # Report sections
+  sections:
+    - summary
+    - health
+    - users
+    - groups
+    - security
+    - recommendations
+
+# Integrations
+integrations:
+  # Prometheus metrics export
+  prometheus:
+    enabled: false
+    port: 9090
+    host: 0.0.0.0
+    path: /metrics
+
+  # n8n automation
+  n8n:
+    enabled: false
+    webhook_url: ${N8N_WEBHOOK}
+    events:
+      - alert
+      - audit_complete
+      - backup_complete
+
+# Logging configuration
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: ./logs/ldap-monitor.log
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+  console: true
+
+# Advanced settings
+advanced:
+  # Performance tuning
+  connection_pool_size: 5
+  max_concurrent_operations: 10
+
+  # Cache settings
+  cache_enabled: true
+  cache_ttl: 300  # seconds
+
+  # Rate limiting
+  rate_limit_enabled: false
+  rate_limit_requests: 100
+  rate_limit_period: 60  # seconds

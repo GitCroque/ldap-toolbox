@@ -1,0 +1,55 @@
+# Docker Compose for local LDAP testing
+version: '3.8'
+
+services:
+  openldap:
+    image: osixia/openldap:latest
+    container_name: ldap-server
+    environment:
+      LDAP_ORGANISATION: "Example Inc"
+      LDAP_DOMAIN: "example.com"
+      LDAP_ADMIN_PASSWORD: "admin"
+    ports:
+      - "389:389"
+      - "636:636"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: ldap-admin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: openldap
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8080:80"
+    depends_on:
+      - openldap
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  ldap_data:
+  ldap_config:
+  prometheus_data:
+  grafana_data:

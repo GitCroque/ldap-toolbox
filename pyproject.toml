@@ -1,0 +1,126 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ldap-health-monitor"
+version = "1.0.0"
+description = "Open-source CLI tool for auditing, monitoring, and managing LDAP servers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "LDAP Toolbox Contributors"}
+]
+keywords = ["ldap", "active-directory", "monitoring", "audit", "cli", "sysadmin"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Systems Administration :: Authentication/Directory :: LDAP",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+]
+
+dependencies = [
+    "ldap3>=2.9.1",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "prometheus-client>=0.19.0",
+    "schedule>=1.2.0",
+    "tabulate>=0.9.0",
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0",
+    "jinja2>=3.1.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.1",
+    "black>=23.7.0",
+    "ruff>=0.0.280",
+    "mypy>=1.4.0",
+    "pre-commit>=3.3.0",
+    "types-pyyaml>=6.0.0",
+    "types-requests>=2.31.0",
+    "types-tabulate>=0.9.0",
+]
+
+[project.scripts]
+ldap-monitor = "src.cli:cli"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/ldap-health-monitor"
+Documentation = "https://github.com/yourusername/ldap-health-monitor/docs"
+Repository = "https://github.com/yourusername/ldap-health-monitor"
+Issues = "https://github.com/yourusername/ldap-health-monitor/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "B008",  # do not perform function calls in argument defaults
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --cov=src --cov-report=term-missing --cov-report=html"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*/tests/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
