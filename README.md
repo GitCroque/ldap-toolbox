@@ -211,12 +211,27 @@ SMTP_PASSWORD=email-password
 
 ## 🔒 Security
 
+**⚠️ IMPORTANT: Never commit LDAP data to version control!**
+
+The `.gitignore` is configured to exclude:
+- Configuration files (`config.yaml`, `.env`)
+- Backups and exports (`*.ldif`, `backups/`, `exports/`)
+- Reports and data files (`*.csv`, `*.json` exports)
+- Logs with potential sensitive information
+
+**Additional security measures:**
 - ✅ Credentials via environment variables only
 - ✅ TLS/SSL connections supported
-- ✅ All operations are logged
+- ✅ All operations are logged locally (not committed)
 - ✅ Confirmations required for destructive operations
 - ✅ Dry-run mode by default for risky operations
 - ✅ Automatic backups before modifications
+
+**Before committing, always verify:**
+```bash
+git status
+# Make sure no .ldif, backup files, or config.yaml are staged
+```
 
 ## 📊 Integration Examples
 

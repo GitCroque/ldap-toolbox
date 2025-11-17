@@ -40,21 +40,43 @@ ENV/
 htmlcov/
 .tox/
 
-# Configuration
+# Configuration & Secrets
 config.yaml
+config.yml
 .env
+.env.local
+*.secret
 
 # Logs
 logs/
 *.log
 
-# Backups
+# Backups & Exports (IMPORTANT: Ne jamais commit les données LDAP!)
 backups/
+exports/
+*.ldif
+*.ldif.gz
+backup*.json
+backup*.yaml
+backup*.yml
 
-# Reports
+# Reports & Data Exports
 reports/
 *.html
 *.csv
+users*.csv
+users*.json
+groups*.csv
+groups*.json
+audit*.json
+audit*.html
+health*.json
+
+# LDAP Data Files (protection supplémentaire)
+*_backup.*
+*_export.*
+ldap_data.*
+ldap_dump.*
 
 # MyPy
 .mypy_cache/
