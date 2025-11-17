@@ -288,13 +288,21 @@ pytest tests/unit/test_connector.py
 
 ## 📚 Documentation
 
-- [Installation Guide](docs/installation.md)
-- [Configuration Guide](docs/configuration.md)
-- [Audit Guide](docs/audit-guide.md)
-- [Monitoring Guide](docs/monitoring-guide.md)
-- [Management Guide](docs/management-guide.md)
-- [Security Best Practices](docs/security.md)
-- [Troubleshooting](docs/troubleshooting.md)
+**📖 [Documentation Wiki Complète →](wiki/)** - Guides détaillés, exemples et tutoriels
+
+### Démarrage Rapide
+- [Installation](docs/installation.md) - Guide d'installation rapide
+- [Configuration](docs/configuration.md) - Configuration de base
+- [Troubleshooting](docs/troubleshooting.md) - Résolution de problèmes
+
+### Wiki - Documentation Détaillée
+- **[Getting Started](wiki/getting-started/Installation.md)** - Installation complète (macOS, Linux, Windows)
+- **[Configuration LDAP](wiki/configuration/LDAP-Configuration.md)** - Config détaillée (AD, OpenLDAP, FreeIPA)
+- **[Audit Utilisateurs](wiki/features/audit/Users-Audit.md)** - Guide complet avec exemples
+- **[Active Directory](wiki/guides/Active-Directory.md)** - Guide spécifique AD avec PowerShell
+- **[FAQ](wiki/troubleshooting/FAQ.md)** - Questions fréquentes avec solutions
+
+➡️ **[Explorer le wiki complet →](wiki/Home.md)**
 
 ## 🤝 Contributing
 
