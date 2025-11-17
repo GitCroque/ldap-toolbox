@@ -1,0 +1,21 @@
+# New Users Import Template
+# Use this template to create multiple users at once
+#
+# Usage: ldap-monitor bulk create-users --from-file new-users-import.csv --confirm
+#
+# Format: uid,cn,sn,givenName,mail,telephoneNumber,department,title
+# - uid: User ID (unique identifier)
+# - cn: Common Name (usually full name)
+# - sn: Surname (last name)
+# - givenName: First name
+# - mail: Email address
+# - telephoneNumber: Phone number (optional)
+# - department: Department (optional)
+# - title: Job title (optional)
+#
+# Examples:
+uid,cn,sn,givenName,mail,telephoneNumber,department,title
+jdoe,John Doe,Doe,John,john.doe@example.com,+1-555-0100,IT,Software Engineer
+jsmith,Jane Smith,Smith,Jane,jane.smith@example.com,+1-555-0101,IT,Senior Developer
+asmith,Alice Smith,Smith,Alice,alice.smith@example.com,+1-555-0102,HR,HR Manager
+bj ones,Bob Jones,Jones,Bob,bob.jones@example.com,+1-555-0103,Sales,Sales Representative

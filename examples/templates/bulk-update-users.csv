@@ -1,0 +1,18 @@
+# Bulk User Update Template
+# Use this template to update multiple user attributes at once
+#
+# Usage: ldap-monitor bulk set-attribute --from-file bulk-update-users.csv --confirm
+#
+# Format: dn,attribute,value
+# - dn: Full Distinguished Name of the user
+# - attribute: Attribute name to update (mail, telephoneNumber, department, etc.)
+# - value: New value for the attribute
+#
+# Examples:
+dn,attribute,value
+uid=jdoe,ou=users,dc=example,dc=com,department,IT
+uid=jdoe,ou=users,dc=example,dc=com,telephoneNumber,+1-555-0100
+uid=jsmith,ou=users,dc=example,dc=com,mail,john.smith@example.com
+uid=jsmith,ou=users,dc=example,dc=com,title,Senior Developer
+uid=asmith,ou=users,dc=example,dc=com,department,HR
+uid=asmith,ou=users,dc=example,dc=com,manager,"cn=Jane Manager,ou=users,dc=example,dc=com"

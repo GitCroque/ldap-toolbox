@@ -1,0 +1,15 @@
+# Bulk Group Membership Template
+# Use this template to add multiple users to groups
+#
+# Usage: ldap-monitor bulk add-to-group --from-file bulk-add-group-members.csv --confirm
+#
+# Format: group_dn,user_dn
+# - group_dn: Full Distinguished Name of the group
+# - user_dn: Full Distinguished Name of the user to add
+#
+# Examples:
+group_dn,user_dn
+"cn=developers,ou=groups,dc=example,dc=com","uid=jdoe,ou=users,dc=example,dc=com"
+"cn=developers,ou=groups,dc=example,dc=com","uid=jsmith,ou=users,dc=example,dc=com"
+"cn=hr-team,ou=groups,dc=example,dc=com","uid=asmith,ou=users,dc=example,dc=com"
+"cn=managers,ou=groups,dc=example,dc=com","cn=Jane Manager,ou=users,dc=example,dc=com"

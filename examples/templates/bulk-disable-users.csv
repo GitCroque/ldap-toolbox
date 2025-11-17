@@ -1,0 +1,15 @@
+# Bulk User Disable Template
+# Use this template to disable multiple user accounts
+#
+# Usage: ldap-monitor bulk disable --from-file bulk-disable-users.csv --confirm
+#
+# Format: dn,reason
+# - dn: Full Distinguished Name of the user
+# - reason: Optional reason for disabling (for logging)
+#
+# Examples:
+dn,reason
+uid=contractor1,ou=users,dc=example,dc=com,Contract ended
+uid=contractor2,ou=users,dc=example,dc=com,Contract ended
+uid=test-user,ou=users,dc=example,dc=com,Test account cleanup
+uid=old-employee,ou=users,dc=example,dc=com,Left company
